@@ -11,17 +11,17 @@ namespace stf
 	public abstract class Pool<T>
 	{
 		private readonly Queue<T> _pool = new Queue<T>(); // Items pool
-		private readonly LinkedList<LinkedItem<T>> _used = new LinkedList<LinkedItem<T>>(); // Shared and used items
-		private readonly Queue<LinkedListNode<LinkedItem<T>>> _nodePool = new Queue<LinkedListNode<LinkedItem<T>>>(); // Pool of shared nodes
+		private readonly LinkedList<LinkedItem<T>> _used = new LinkedList<LinkedItem<T>>(); // Linked and used items
+		private readonly Queue<LinkedListNode<LinkedItem<T>>> _nodePool = new Queue<LinkedListNode<LinkedItem<T>>>(); // Pool of links
 
-		protected Queue<T> inPool => _pool;
-		protected LinkedList<LinkedItem<T>> Used => _used;
+		protected Queue<T> InPool => _pool;
+		protected LinkedList<LinkedItem<T>> InUse => _used;
 
 		public bool AutomaticRefresh = true;
 
 		public int Count => _pool.Count + _used.Count;
 		public int Available => _pool.Count;
-		public int Using => _used.Count;
+		public int Used => _used.Count;
 
 
 		// Use this as needed in the constructors of your child classes
@@ -107,8 +107,8 @@ namespace stf
 			_pool.Enqueue(linkedItem.Item); // Pooling
 			if (linkedItem.Link != null)
 			{
-				_used.Remove(linkedItem.Link); // Remove node from LinkedList
-				_nodePool.Enqueue(linkedItem.Link); // Pool this node
+				_used.Remove(linkedItem.Link); // Remove link from used
+				_nodePool.Enqueue(linkedItem.Link); // Pool this link
 			}
 		}
 
