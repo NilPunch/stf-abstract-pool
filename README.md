@@ -2,7 +2,7 @@
 This C# project contains a template pool that keeps track of used objects and has flexible internal mechanisms.
 
 ## Aim
-Make the universal, garbage free and automatic pool
+Make the universal, garbage free and automatic pool.
 
 ## Usage
 Inherit from base pool and override required methods. For more information see the source for the `abstract class Pool<T>`.
