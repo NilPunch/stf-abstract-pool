@@ -1,5 +1,5 @@
 ## stf-abstract-pool
-This project contains C# templated pool that keeps track of used objects and have highly customisable inner mechanisms.
+This C# project contains a template pool that keeps track of used objects and has flexible internal mechanisms.
 
 # Aim
 Make the universal, garbage free and automatic pool
@@ -7,7 +7,7 @@ Make the universal, garbage free and automatic pool
 # Usage
 Inherit from base pool and override required methods. For more information see the source for the `abstract class Pool<T>`.
 ```csharp
-// Simple pooling case, where we just allocate memory for objects and then manually return them to the pool
+// Simple pooling case, where we just allocate memory for objects and then manually return them to the pool.
 public class SimplePool<T> : Pool<T> where T : new()
 {
 	protected override T CreateNewItem() => new T();
