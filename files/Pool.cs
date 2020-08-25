@@ -23,7 +23,6 @@ namespace stf
 		public int Available => _pool.Count;
 		public int Used => _used.Count;
 
-
 		// Use this as needed in the constructors of your child classes
 		protected void Prewarm(uint prewarm = 0)
 		{
@@ -119,7 +118,6 @@ namespace stf
 		protected abstract void DeactivateItem(T item); // Custom item deactivation
 
 		/* Optional to override */
-		protected virtual bool RefreshCondition() => false; // Automatic update case on every Get()
+		protected virtual bool RefreshCondition() => false; // Automatic update condition on every Get()
 	}
 }
-
