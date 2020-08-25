@@ -1,10 +1,10 @@
-## stf-abstract-pool
+# stf-abstract-pool
 This C# project contains a template pool that keeps track of used objects and has flexible internal mechanisms.
 
-# Aim
+## Aim
 Make the universal, garbage free and automatic pool
 
-# Usage
+## Usage
 Inherit from base pool and override required methods. For more information see the source for the `abstract class Pool<T>`.
 ```csharp
 // Simple pooling case, where we just allocate memory for objects and then manually return them to the pool.
@@ -55,7 +55,7 @@ public class PrefabPool : Pool<UnityEngine.GameObject>
 }
 ```
 
-# Installation
+## Installation
 Just copy the content of the `files` folder into your project.
 
 # License
