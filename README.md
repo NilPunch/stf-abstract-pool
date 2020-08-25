@@ -21,7 +21,7 @@ public class SimplePool<T> : Pool<T> where T : new()
   
 // Unity3D prefabs pool, where pooled objects are hierarchically attached to the transform component of target gameobject.
 // This pool also tracks the activity of objects. If any object has become inactive, then it will be returned to the pool.
-public class PrefabPool : Boris.Pool<UnityEngine.GameObject>
+public class PrefabPool : Pool<UnityEngine.GameObject>
 {
 	private GameObject _prefab;
 	private GameObject _target;
