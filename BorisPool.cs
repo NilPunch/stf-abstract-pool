@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+using System.Collections.Generic;
 
-namespace Boris
+namespace stf
 {
 	public class LinkedItem<T>
 	{
@@ -15,7 +14,7 @@ namespace Boris
 		private readonly LinkedList<LinkedItem<T>> _used = new LinkedList<LinkedItem<T>>(); // Shared and used items
 		private readonly Queue<LinkedListNode<LinkedItem<T>>> _nodePool = new Queue<LinkedListNode<LinkedItem<T>>>(); // Pool of shared nodes
 
-		protected Queue<T> Pooled => _pool;
+		protected Queue<T> inPool => _pool;
 		protected LinkedList<LinkedItem<T>> Used => _used;
 
 		public bool AutomaticRefresh = true;
@@ -25,7 +24,7 @@ namespace Boris
 		public int Using => _used.Count;
 
 
-		// Use it into constructor for child class if needed
+		// Use this as needed in the constructors of your child classes
 		protected void Prewarm(uint prewarm = 0)
 		{
 			while (prewarm > 0)
@@ -36,7 +35,8 @@ namespace Boris
 				--prewarm;
 			}
 		}
-
+		
+		// Get pooled object
 		public LinkedItem<T> Get()
 		{
 			T item;
@@ -71,7 +71,7 @@ namespace Boris
 				_used.AddLast(linkListNodeLinkedItem);  // This doesn't create anything
 			}
 
-			// Preparaction before using
+			// Preparacion before using
 			ActivateItem(item);
 
 			// Packing object
@@ -112,32 +112,14 @@ namespace Boris
 			}
 		}
 
-		#region Must override this
-		// Custom item creation
-		protected abstract T CreateNewItem();
-		// Predicate that check if item is not in use
-		protected abstract bool ItemIsFree(T item);
-		// Custom item activation
-		protected abstract void ActivateItem(T item);
-		// Custom item deactivation
-		protected abstract void DeactivateItem(T item);
-		#endregion
+		/* Must override this */
+		protected abstract T CreateNewItem(); // Custom item creation
+		protected abstract bool ItemIsFree(T item); // Predicate that check if item is not in use
+		protected abstract void ActivateItem(T item); // Custom item activation
+		protected abstract void DeactivateItem(T item); // Custom item deactivation
 
-		#region Otional override
-		// Automatic update case on every Get()
-		protected virtual bool RefreshCondition() => false;
-		#endregion
-	}
-
-	public class SimplePool<T> : Pool<T> where T : new()
-	{
-		protected override T CreateNewItem() => new T();
-
-		protected override void ActivateItem(T item) {}
-
-		protected override void DeactivateItem(T item) {}
-
-		protected override bool ItemIsFree(T item) => false;
+		/* Optional to override */
+		protected virtual bool RefreshCondition() => false; // Automatic update case on every Get()
 	}
 }
 
