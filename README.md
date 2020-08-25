@@ -5,23 +5,24 @@ This project contains C# templated pool that keeps track of used objects and hav
 Make the universal, garbage free and automatic pool
 
 # Usage
-Inherit from base pool and override required methods
+Inherit from base pool and override required methods. For more information see the source for the `abstract class Pool<T>`.
 ```csharp
-  // Simple pooling case
-	public class SimplePool<T> : Pool<T> where T : new()
-	{
-		protected override T CreateNewItem() => new T();
+// Simple pooling case, where we just allocate memory for objects and then manually return them to the pool
+public class SimplePool<T> : Pool<T> where T : new()
+{
+	protected override T CreateNewItem() => new T();
 
-		protected override void ActivateItem(T item) {}
+	protected override void ActivateItem(T item) {}
 
-		protected override void DeactivateItem(T item) {}
+	protected override void DeactivateItem(T item) {}
 
-		protected override bool ItemIsFree(T item) => false;
-	}
+	protected override bool ItemIsFree(T item) => false;
+}
   
-  // For Unity3D prefabs pooling, where pooled objects are hierarchically attached to the Transform component of target gameobject
-  public class PrefabPool : Boris.Pool<UnityEngine.GameObject>
-  {
+// Unity3D prefabs pool, where pooled objects are hierarchically attached to the transform component of target gameobject.
+// This pool also tracks the activity of objects. If any object has become inactive, then it will be returned to the pool.
+public class PrefabPool : Boris.Pool<UnityEngine.GameObject>
+{
 	private GameObject _prefab;
 	private GameObject _target;
 
@@ -51,7 +52,7 @@ Inherit from base pool and override required methods
 
 	protected override bool ItemIsFree(GameObject item) => item.activeInHierarchy == false;
 	protected override bool RefreshCondition() => true;
-  }
+}
 ```
 
 # Installation
