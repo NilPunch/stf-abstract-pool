@@ -10,13 +10,13 @@ public class PrefabPool : Pool<UnityEngine.GameObject>
 		Prewarm(prewarm);
 	}
   
-  // Called right before getting an object from the pool, so we just activate it
+  	// Called right before getting an object from the pool, so we just activate it
 	protected override void ActivateItem(GameObject item)
 	{
 		item.SetActive(true);
 	}
   
-  // On item creation we just instantiate new GameObject from _prefab and attach it to the parent
+  	// On item creation we just instantiate new GameObject from _prefab and attach it to the parent
 	protected override GameObject CreateNewItem()
 	{
 		GameObject newGameObject = GameObject.Instantiate(_prefab);
@@ -24,7 +24,7 @@ public class PrefabPool : Pool<UnityEngine.GameObject>
 		return newGameObject;
 	}
   
-  // Called right before the object is returned to the pool
+  	// Called right before the object is returned to the pool
 	protected override void DeactivateItem(GameObject item)
 	{
 		item.SetActive(false);
@@ -32,6 +32,6 @@ public class PrefabPool : Pool<UnityEngine.GameObject>
   
 	protected override bool ItemIsFree(GameObject item) => item.activeInHierarchy == false;
   
-  // This means that we will check the activity of objects every call to the Get() function.
+  	// This means that we will check the activity of objects every call to the Get() function.
 	protected override bool RefreshCondition() => true;
 }
